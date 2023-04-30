@@ -8,11 +8,9 @@ class Play extends Phaser.Scene {
         this.load.image('rocket', './assets/rocket.png');
         this.load.image('spaceship', './assets/spaceship.png');
         this.load.image('starfield', './assets/starfield.png');
+        this.load.image('newspaceship', './assets/newspaceship.png');
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
-        //load flare particles
-        //this.load.atlas('flares', 'assets/particles/flares.png', 'assets/particles/flares.json');
-
     }
 
     create() {
@@ -34,19 +32,14 @@ class Play extends Phaser.Scene {
         this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'spaceship', 0, 30).setOrigin(0, 0);
         this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20).setOrigin(0,0);
         this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10).setOrigin(0,0);
+        //add new Spaceship (x1)
+        this.ship04 = new Spaceship(this, game,config.width, borderUISize*4 + borderPadding*3, 'newspaceship', 0, 45).setOrigin(0,0);
 
         // define keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
-        //var input;
-        //input = this.input;
-        //text = this.add.text('100', '100', 'test');
-        //text.setInteractive;
-        //text.on('pointerup', function () {})
-        //this.input.on('gameobjectdown', () => {})
 
         // animation config
         this.anims.create({
@@ -87,7 +80,17 @@ class Play extends Phaser.Scene {
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← to Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
         }, null, this);
+        
+        //increase speed after 30 seconds of play
+        this.clock30 = this.time.delayedCall(game.settings.gameTimer/2, () =>
+        {
+            this.ship01.increaseSpeed(1.5);
+            this.ship02.increaseSpeed(1.5);
+            this.ship03.increaseSpeed(1.5);
+        }, null, this);
     }
+
+    
 
     update() {
         // check key input for restart / menu
