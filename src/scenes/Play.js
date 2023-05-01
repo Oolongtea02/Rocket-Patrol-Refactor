@@ -46,11 +46,11 @@ class Play extends Phaser.Scene {
         this.sound.add('music_sushiGo',{ loop: false, volume : 0.1 }).play();
 
         //add particle emisser
-        this.add.particles(400, 200, 'star', {
+        /*const emitter = this.add.particles(400, 200, 'star', {
             speed: 100,
             lifespan: 3000,
             gravityY: 200
-        });
+        }); */
 
         // animation config
         this.anims.create({
@@ -126,14 +126,32 @@ class Play extends Phaser.Scene {
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship03);
+            const emitter = this.add.particles(400, 200, 'star', {
+                speed: 100,
+                lifespan: 3000,
+                gravityY: 200
+            });
+            emitter.explode(16);
         }
         if (this.checkCollision(this.p1Rocket, this.ship02)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship02);
+            const emitter = this.add.particles(400, 200, 'star', {
+                speed: 100,
+                lifespan: 3000,
+                gravityY: 200
+            });
+            emitter.explode(16);
         }
         if (this.checkCollision(this.p1Rocket, this.ship01)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
+            const emitter = this.add.particles(400, 200, 'star', {
+                speed: 100,
+                lifespan: 3000,
+                gravityY: 200
+            });
+            emitter.explode(16);
         }
     }
 
