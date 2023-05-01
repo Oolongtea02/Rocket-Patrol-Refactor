@@ -9,6 +9,7 @@ class Play extends Phaser.Scene {
         this.load.image('spaceship', './assets/spaceship.png');
         this.load.image('starfield', './assets/starfield.png');
         this.load.image('newspaceship', './assets/newspaceship.png');
+        this.load.image('star', './assets/star3.png');
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
@@ -40,6 +41,16 @@ class Play extends Phaser.Scene {
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+
+        //play background music
+        this.sound.add('music_sushiGo',{ loop: false, volume : 0.1 }).play();
+
+        //add particle emisser
+        this.add.particles(400, 200, 'star', {
+            speed: 100,
+            lifespan: 3000,
+            gravityY: 200
+        });
 
         // animation config
         this.anims.create({
