@@ -10,6 +10,7 @@ class Play extends Phaser.Scene {
         this.load.image('starfield', './assets/starfield.png');
         this.load.image('newspaceship', './assets/newspaceship.png');
         this.load.image('star', './assets/star3.png');
+        this.load.atlas('flares', './assets/particles/flares.png', './assets/particles/flares.json');
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
@@ -34,7 +35,7 @@ class Play extends Phaser.Scene {
         this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20).setOrigin(0,0);
         this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10).setOrigin(0,0);
         //add new Spaceship (x1)
-        this.ship04 = new Spaceship(this, game,config.width, borderUISize*4 + borderPadding*3, 'newspaceship', 0, 45).setOrigin(0,0);
+        this.speeder = new Spaceship(this, game,config.width, borderUISize*7 + borderPadding*5, 'newspaceship', 0, 45).setOrigin(0,0);
 
         // define keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
@@ -44,13 +45,6 @@ class Play extends Phaser.Scene {
 
         //play background music
         this.sound.add('music_sushiGo',{ loop: false, volume : 0.1 }).play();
-
-        //add particle emisser
-        /*const emitter = this.add.particles(400, 200, 'star', {
-            speed: 100,
-            lifespan: 3000,
-            gravityY: 200
-        }); */
 
         // animation config
         this.anims.create({
@@ -120,38 +114,43 @@ class Play extends Phaser.Scene {
              this.ship01.update();               // update spaceship (x3)
             this.ship02.update();
             this.ship03.update();
+            this.speeder.update();
         }
 
         // check collisions
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship03);
-            const emitter = this.add.particles(400, 200, 'star', {
+            this.emitter = this.add.particles(this.ship03.x, this.ship03.y, 'star', {
                 speed: 100,
                 lifespan: 3000,
                 gravityY: 200
             });
-            emitter.explode(16);
+            this.emitter.explode(16);
         }
         if (this.checkCollision(this.p1Rocket, this.ship02)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship02);
-            const emitter = this.add.particles(400, 200, 'star', {
+            this.emitter = this.add.particles(this.ship02.x, this.ship02.y, 'star', {
                 speed: 100,
                 lifespan: 3000,
                 gravityY: 200
             });
-            emitter.explode(16);
+            this.emitter.explode(16);
         }
         if (this.checkCollision(this.p1Rocket, this.ship01)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
-            const emitter = this.add.particles(400, 200, 'star', {
+            this.emitter = this.add.particles(this.ship01.x, this.ship01.y, 'star', {
                 speed: 100,
                 lifespan: 3000,
                 gravityY: 200
             });
-            emitter.explode(16);
+            this.emitter.explode(16); 
+        }
+        if (this.checkCollision(this.p1Rocket, this.speeder)) {
+            this.p1Rocket.reset();
+            this.shipExplode(this.speeder);
         }
     }
 
@@ -168,10 +167,21 @@ class Play extends Phaser.Scene {
     }
 
     shipExplode(ship) {
+        this.emitter = this.add.particles(400, 250, 'flares', {
+            frame: [ 'red', 'yellow', 'green' ],
+            lifespan: 4000,
+            speed: { min: 150, max: 250 },
+            scale: { start: 0.8, end: 0 },
+            gravityY: 150,
+            blendMode: 'ADD',
+            emitting: false
+        });
+        this.emitter.explode(16);
         // temporarily hide ship
         ship.alpha = 0;                         
         // create explosion sprite at ship's position
         let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
+        console.log(this.emitter);
         boom.anims.play('explode');             // play explode animation
         boom.on('animationcomplete', () => {    // callback after anim completes
             ship.reset();                         // reset ship position
@@ -185,4 +195,3 @@ class Play extends Phaser.Scene {
         this.sound.play('sfx_explosion');
       }
 }
-
