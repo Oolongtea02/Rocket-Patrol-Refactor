@@ -46,6 +46,9 @@ class Play extends Phaser.Scene {
         //play background music
         this.sound.add('music_sushiGo',{ loop: false, volume : 0.1 }).play();
 
+        //add mouse controls and user input
+        mouse = this.input;
+
         // animation config
         this.anims.create({
             key: 'explode',
@@ -192,6 +195,7 @@ class Play extends Phaser.Scene {
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score; 
         
-        this.sound.play('sfx_explosion');
+        //randomize explosion sound effects on impact 
+        this.sound.play('sfx_explosion' + Math.floor(Math.random() * 4));
       }
 }
