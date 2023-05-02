@@ -12,31 +12,43 @@ class Rocket extends Phaser.GameObjects.Sprite {
 
     update() {
         // left/right movement
-        if(!this.isFiring) {
-            if(keyLEFT.isDown && this.x >= borderUISize + this.width) {
-                this.x -= this.moveSpeed;
-            } else if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width) {
-                this.x += this.moveSpeed;
-            }
-        }
+        mouse.on
+        (
+            "pointermove", // event
+            (pointer) => // callback
+            {
+                if(!this.isFiring)
+                {
+                    this.x = Phaser.Math.Clamp(pointer.x, 47, 578);
+                    if(keyLEFT.isDown && this.x >= borderUISize + this.width) {
+                        this.x -= this.moveSpeed;
+                    } else if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width) {
+                        this.x += this.moveSpeed;
+                    }
+                }
+            },
+            this
+        );
+       
         // fire button
-        if(Phaser.Input.Keyboard.JustDown(keyF) && !this.isFiring) {
-            this.isFiring = true;
-            this.sfxRocket.play();  // play sfx
+        if(mouse.activePointer.leftButtonDown() && !this.isFiring) 
+        {
+          this.isFiring = true;
+          this.sfxRocket.play(); // play the rocket sfx
         }
         // if fired, move up
-        if(this.isFiring && this.y >= borderUISize * 3 + borderPadding) {
-            this.y -= this.moveSpeed;
-        }
+        if(this.isFiring && this.y >= 108) this.y -= 2;
         // reset on miss
-        if(this.y <= borderUISize * 3 + borderPadding) {
-            this.reset();
+        if(this.y <= 108)
+        {
+            this.isFiring = false;
+            this.y = 431;    
         }
     }
 
     // reset rocket to "ground"
     reset() {
         this.isFiring = false;
-        this.y = game.config.height - borderUISize - borderPadding;
+        this.y = 431;
     }
 }
