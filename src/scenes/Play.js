@@ -122,7 +122,9 @@ class Play extends Phaser.Scene {
             this.scene.start("menuScene");
         }
 
-        //this.mountain.tilePositionX -= 4;  // update tile sprite
+        this.mountain.tilePositionX -= 4;  // update tile sprite
+        this.mountain1.tilePositionX -= 3;
+        this.trees.tilePositionX -= 2;
         if (keyRIGHT.isDown) {
             // move player to right, and scroll tilesprites to left
             this.p1Rocket.x += 5;
