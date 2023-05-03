@@ -2,6 +2,7 @@
 Samuel Zhang
 CMPM 120 (Game Development Experience) Rocket Patrol Mods Assignment
 Mod Title: Rocket Patrol II: Firework OutsideLands
+Time Spent: ~12 hours
 Mods Completed: 
 * Add your own (copyright-free) background music to the Play scene (please be mindful of the volume) (5)
 * Implement the speed increase that happens after 30 seconds in the original game (5)
@@ -9,6 +10,8 @@ Mods Completed:
 * Allow the player to control the Rocket after it's fired (5)
 * Create 4 new explosion sound effects and randomize which one plays on impact (10)
 * Implement parallax scrolling for the background (10)
+* Using a texture atlas, create a new animated sprite for the Spaceship enemies (10)
+ - used piskelapp to draw the fireball sprite and used spritesheet to animate it on impact
 * Use Phaser's particle emitter to create a particle explosion when the rocket hits the spaceship(15)
 * Implement mouse control for player movement and mouse click to fire (15)
 * Create a new enemy Spaceship type (w/ new artwork) that's smaller, moves faster, and is worth more points (15)

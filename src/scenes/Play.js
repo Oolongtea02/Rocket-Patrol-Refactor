@@ -15,7 +15,7 @@ class Play extends Phaser.Scene {
         this.load.image('star', './assets/star3.png');
         this.load.atlas('flares', './assets/particles/flares.png', './assets/particles/flares.json');
         // load spritesheet
-        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
+        this.load.spritesheet('explosion', './assets/fireball.png', {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
 
     create() {
@@ -96,6 +96,7 @@ class Play extends Phaser.Scene {
         // 60-second play clock
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
+            this.clock--;
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← to Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
@@ -107,6 +108,7 @@ class Play extends Phaser.Scene {
             this.ship01.increaseSpeed(1.5);
             this.ship02.increaseSpeed(1.5);
             this.ship03.increaseSpeed(1.5);
+            this.speeder.increaseSpeed(2);
         }, null, this);
     }
 
@@ -184,6 +186,7 @@ class Play extends Phaser.Scene {
             this.shipExplode(this.speeder);
         }
     }
+
 
     checkCollision(rocket, ship) {
         // simple AABB checking
