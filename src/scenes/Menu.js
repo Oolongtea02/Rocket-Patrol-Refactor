@@ -4,6 +4,9 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
+        //load images
+        this.load.image('menuColor', './assets/menuColor.png');
+        this.load.image('fireball', './assets/fireball.png');
         // load audio
         this.load.audio('sfx_select', './assets/blip_select12.wav');
         this.load.audio('sfx_explosion', './assets/explosion38.wav');
@@ -18,6 +21,8 @@ class Menu extends Phaser.Scene {
     }
 
     create() {
+        this.add.image(0, 0, 'menuColor').setOrigin(0, 0);
+        this.add.image(0, 0, 'fireball').setOrigin(0, 0);
         // menu text configuration
         let menuConfig = {
             fontFamily: 'Courier',
@@ -33,14 +38,52 @@ class Menu extends Phaser.Scene {
         } 
         
         // show menu text
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize -
-        borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2, 'Use mouse to move & leftclick to fire', menuConfig).setOrigin(0.5);
-        menuConfig.backgroundColor = '#CCCCFF'; //#00FF00
-        menuConfig.color = '#000';
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize +
-        borderPadding, 'Press <- for Novice or -> for Expert', menuConfig).setOrigin(0.5);
+        const text = this.add.text(60, 100, 'ROCKET PATROL', {
+            fontFamily: 'Courier',
+            fontSize: '64px',
+            color: '#8a3044',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+        });
 
+        const text1 = this.add.text(60, 160, 'Use mouse to \n move & leftclick to fire', {
+            fontFamily: 'Courier',
+            fontSize: '32px',
+            color: '#5e303a',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+        });
+
+        const text2 = this.add.text(20, 260, 'Press <- for Novice or -> for Expert', {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            color: '#210d11',
+            align: 'left',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+        });
+
+        const text3 = this.add.text(60, 340, 'Tip: After clicking, \n you can move the left/right \n arrowkeys to conrol the rocket movement', {
+            fontFamily: 'Courier',
+            fontSize: '20px',
+            color: '#5e303a',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+        });
+
+        menuConfig.backgroundColor = '#CCCCFF'; //#65c79b'
+        menuConfig.color = '#000';
+        
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
