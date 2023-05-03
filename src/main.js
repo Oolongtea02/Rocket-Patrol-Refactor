@@ -8,6 +8,7 @@ Mods Completed:
 * Implement the speed increase that happens after 30 seconds in the original game (5)
 * Create a new scrolling tile sprite for the background (5)
 * Allow the player to control the Rocket after it's fired (5)
+* Create a new title screen (e.g., new artwork, typography, layout) (10)
 * Create 4 new explosion sound effects and randomize which one plays on impact (10)
 * Implement parallax scrolling for the background (10)
 * Using a texture atlas, create a new animated sprite for the Spaceship enemies (10)
